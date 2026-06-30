@@ -1,0 +1,23 @@
+title: Repeated Failed Sign-ins From One IP
+id: ENTRA-001
+status: experimental
+description: Synthetic Entra sign-in correlation for repeated failures from one source IP.
+logsource:
+  product: azure
+  service: entra-id
+  definition: signIn
+detection:
+  selection:
+    status.errorCode: not 0
+  timeframe: 5m
+  condition: count() by ipAddress, appDisplayName >= 5
+fields:
+  - createdDateTime
+  - userPrincipalName
+  - ipAddress
+  - appDisplayName
+  - status.errorCode
+falsepositives:
+  - Managed identity testing
+  - Broken automation
+level: medium

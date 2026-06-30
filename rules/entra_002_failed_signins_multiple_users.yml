@@ -1,0 +1,23 @@
+title: Failed Sign-ins Across Multiple Users
+id: ENTRA-002
+status: experimental
+description: Synthetic Entra sign-in correlation for one source failing across multiple users.
+logsource:
+  product: azure
+  service: entra-id
+  definition: signIn
+detection:
+  selection:
+    status.errorCode: not 0
+  timeframe: 10m
+  condition: distinct(userPrincipalName) by ipAddress, appDisplayName >= 5
+fields:
+  - createdDateTime
+  - userPrincipalName
+  - ipAddress
+  - appDisplayName
+  - status.errorCode
+falsepositives:
+  - Approved gateways
+  - Identity validation scripts
+level: medium

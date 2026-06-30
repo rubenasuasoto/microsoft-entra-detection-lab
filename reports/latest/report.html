@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Microsoft Entra Detection Lab</title>
+  <style>
+    :root { --bg:#101418; --panel:#182026; --panel2:#12191f; --ink:#f2f7fb; --muted:#a9b6c1; --line:#33424d; --accent:#62d5b4; --blue:#8fc2ff; --amber:#f3c76f; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.5 "Segoe UI",Arial,sans-serif; }
+    header { padding:30px max(24px,calc((100vw - 1180px)/2)); background:var(--panel2); border-bottom:1px solid var(--line); }
+    h1 { margin:0; font-size:30px; } h2 { margin:0 0 14px; font-size:18px; } p { color:var(--muted); }
+    main { max-width:1180px; margin:0 auto; padding:24px; display:grid; gap:18px; }
+    section { border:1px solid var(--line); background:var(--panel); border-radius:8px; padding:18px; }
+    .fingerprint { font:12px Consolas,monospace; color:var(--muted); }
+    .metrics { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+    .metric { border:1px solid var(--line); background:var(--panel2); border-radius:7px; padding:14px; } .metric strong { display:block; font-size:26px; color:var(--accent); }
+    .detections { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+    .detection { border:1px solid var(--line); background:var(--panel2); border-radius:7px; padding:14px; } .detection span { color:var(--blue); font:12px Consolas,monospace; margin-right:10px; } .detection small { color:var(--muted); }
+    .table-wrap { overflow:auto; } table { width:100%; min-width:850px; border-collapse:collapse; } th,td { padding:10px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; } th, td small { color:var(--muted); } td small { display:block; max-width:360px; }
+    .status { padding:3px 7px; border-radius:999px; background:#26352f; } .pass,.keep { color:var(--accent); } .fail { color:#ff9c91; } .tune { color:var(--amber); }
+    .notice { border-left:3px solid var(--amber); padding-left:12px; }
+    @media (max-width:760px) { .metrics,.detections { grid-template-columns:minmax(0,1fr); } h1 { font-size:24px; } }
+  </style>
+</head>
+<body>
+  <header><h1>Microsoft Entra Detection Lab</h1><p>Reproducible defensive detection engineering with synthetic Entra ID telemetry.</p><span class="fingerprint">pack ab6be44bc3b8</span></header>
+  <main>
+    <section class="metrics">
+      <div class="metric"><strong>6/6</strong><span>Valid detections</span></div>
+      <div class="metric"><strong>21/21</strong><span>Passing cases</span></div>
+      <div class="metric"><strong>3</strong><span>Tuning cases</span></div>
+    </section>
+    <section><h2>Detection pack</h2><div class="detections">
+        <article class="detection">
+          <div><span>ENTRA-001</span><strong>Repeated Failed Sign-ins From One IP</strong></div>
+          <p>5 failed sign-ins in 5 minutes per IP and app</p>
+          <small>signIn | medium | P3</small>
+        </article>
+        
+        <article class="detection">
+          <div><span>ENTRA-002</span><strong>Failed Sign-ins Across Multiple Users</strong></div>
+          <p>5 distinct users with failures in 10 minutes per IP and app</p>
+          <small>signIn | medium | P2</small>
+        </article>
+        
+        <article class="detection">
+          <div><span>ENTRA-003</span><strong>MFA Denied Repeatedly Followed By Success</strong></div>
+          <p>2 MFA denied failures followed by success in 15 minutes for the same user and IP</p>
+          <small>signIn | high | P1</small>
+        </article>
+        
+        <article class="detection">
+          <div><span>ENTRA-004</span><strong>High-risk Sign-in Not Blocked</strong></div>
+          <p>Successful medium or high risk sign-in where Conditional Access did not fail</p>
+          <small>signIn | high | P1</small>
+        </article>
+        
+        <article class="detection">
+          <div><span>ENTRA-005</span><strong>Privileged Role Assignment</strong></div>
+          <p>Successful assignment to Global Administrator or Privileged Role Administrator</p>
+          <small>directoryAudit | high | P1</small>
+        </article>
+        
+        <article class="detection">
+          <div><span>ENTRA-006</span><strong>Application Credential Added</strong></div>
+          <p>Successful application or service principal credential update</p>
+          <small>directoryAudit | medium | P2</small>
+        </article>
+        </div></section>
+    <section><h2>Validation matrix</h2><div class="table-wrap"><table><thead><tr><th>Case</th><th>Rule</th><th>Category</th><th>Expected</th><th>Observed</th><th>Result</th><th>Decision</th></tr></thead><tbody>
+        <tr>
+          <td><strong>ENTRA-001-POS</strong><small>Five failures from one source IP and one application inside five minutes.</small></td>
+          <td>ENTRA-001</td>
+          <td>positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-001-NEG</strong><small>Failures are split across unrelated source IPs.</small></td>
+          <td>ENTRA-001</td>
+          <td>negative</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-001-BOUNDARY</strong><small>Four failures stay just below the threshold.</small></td>
+          <td>ENTRA-001</td>
+          <td>boundary</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-002-POS</strong><small>One source fails against five distinct users.</small></td>
+          <td>ENTRA-002</td>
+          <td>positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-002-NEG</strong><small>Repeated failures affect only one user.</small></td>
+          <td>ENTRA-002</td>
+          <td>negative</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-002-BOUNDARY</strong><small>Four distinct users remain below the threshold.</small></td>
+          <td>ENTRA-002</td>
+          <td>boundary</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-003-POS</strong><small>Two MFA denials are followed by a success for the same user and IP.</small></td>
+          <td>ENTRA-003</td>
+          <td>positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-003-NEG</strong><small>The later success comes from a different IP.</small></td>
+          <td>ENTRA-003</td>
+          <td>negative</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-003-BOUNDARY</strong><small>One MFA denial before success is below threshold.</small></td>
+          <td>ENTRA-003</td>
+          <td>boundary</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-003-TUNE</strong><small>A fictional helpdesk recovery flow still alerts and must be tuned with owner context.</small></td>
+          <td>ENTRA-003</td>
+          <td>false_positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status tune">tune</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-004-POS</strong><small>A high-risk sign-in succeeds without a Conditional Access failure.</small></td>
+          <td>ENTRA-004</td>
+          <td>positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-004-NEG</strong><small>A high-risk sign-in is blocked by Conditional Access.</small></td>
+          <td>ENTRA-004</td>
+          <td>negative</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-004-BOUNDARY</strong><small>A successful sign-in has low risk only.</small></td>
+          <td>ENTRA-004</td>
+          <td>boundary</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-005-POS</strong><small>A fictional identity is added to Global Administrator.</small></td>
+          <td>ENTRA-005</td>
+          <td>positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-005-NEG</strong><small>A non-privileged group membership change is outside scope.</small></td>
+          <td>ENTRA-005</td>
+          <td>negative</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-005-BOUNDARY</strong><small>A failed privileged role assignment should not alert as a successful change.</small></td>
+          <td>ENTRA-005</td>
+          <td>boundary</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-005-TUNE</strong><small>Approved emergency access review still alerts until the change workflow is encoded as tuning.</small></td>
+          <td>ENTRA-005</td>
+          <td>false_positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status tune">tune</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-006-POS</strong><small>A new password credential is added to a fictional application.</small></td>
+          <td>ENTRA-006</td>
+          <td>positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-006-NEG</strong><small>A display name update does not modify credentials.</small></td>
+          <td>ENTRA-006</td>
+          <td>negative</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-006-BOUNDARY</strong><small>A failed credential update should not alert.</small></td>
+          <td>ENTRA-006</td>
+          <td>boundary</td>
+          <td>false</td>
+          <td>false</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status keep">keep</span></td>
+        </tr>
+        
+        <tr>
+          <td><strong>ENTRA-006-TUNE</strong><small>Approved synthetic certificate rotation still alerts until the rotation pipeline is documented.</small></td>
+          <td>ENTRA-006</td>
+          <td>false_positive</td>
+          <td>true</td>
+          <td>true</td>
+          <td><span class="status pass">pass</span></td>
+          <td><span class="status tune">tune</span></td>
+        </tr>
+        </tbody></table></div></section>
+    <section><h2>Scope</h2><p class="notice">Synthetic lab only. No real tenants, credentials, tokens, production logs or live Graph calls.</p></section>
+  </main>
+</body>
+</html>

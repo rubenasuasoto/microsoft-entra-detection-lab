@@ -1,0 +1,16 @@
+# Summary
+
+* [Overview](README.md)
+* [Reviewer guide](REVIEWER_GUIDE.md)
+* [Detection catalog](DETECTION_CATALOG.md)
+* [Data sources](DATA_SOURCES.md)
+* [Validation](VALIDATION.md)
+* [Tuning guide](TUNING_GUIDE.md)
+* [GitBook setup](GITBOOK_SETUP.md)
+* [Playbooks](playbooks/README.md)
+  * [ENTRA-001 Repeated failed sign-ins from one IP](playbooks/ENTRA-001_repeated_failed_signins_one_ip.md)
+  * [ENTRA-002 Failed sign-ins across multiple users](playbooks/ENTRA-002_failed_signins_multiple_users.md)
+  * [ENTRA-003 MFA denied then success](playbooks/ENTRA-003_mfa_denied_then_success.md)
+  * [ENTRA-004 High-risk sign-in not blocked](playbooks/ENTRA-004_high_risk_signin_not_blocked.md)
+  * [ENTRA-005 Privileged role assignment](playbooks/ENTRA-005_privileged_role_assignment.md)
+  * [ENTRA-006 Application credential added](playbooks/ENTRA-006_application_credential_added.md)

@@ -1,0 +1,22 @@
+case_id,rule_id,category,expected,observed,status,disposition,matched_event_count,matched_fields,note
+ENTRA-001-POS,ENTRA-001,positive,True,True,pass,keep,5,status.errorCode;ipAddress;appDisplayName,Five failures from one source IP and one application inside five minutes.
+ENTRA-001-NEG,ENTRA-001,negative,False,False,pass,keep,0,status.errorCode;ipAddress;appDisplayName,Failures are split across unrelated source IPs.
+ENTRA-001-BOUNDARY,ENTRA-001,boundary,False,False,pass,keep,0,status.errorCode;ipAddress;appDisplayName,Four failures stay just below the threshold.
+ENTRA-002-POS,ENTRA-002,positive,True,True,pass,keep,5,status.errorCode;userPrincipalName;ipAddress,One source fails against five distinct users.
+ENTRA-002-NEG,ENTRA-002,negative,False,False,pass,keep,0,status.errorCode;userPrincipalName;ipAddress,Repeated failures affect only one user.
+ENTRA-002-BOUNDARY,ENTRA-002,boundary,False,False,pass,keep,0,status.errorCode;userPrincipalName;ipAddress,Four distinct users remain below the threshold.
+ENTRA-003-POS,ENTRA-003,positive,True,True,pass,keep,3,status.failureReason;userPrincipalName;ipAddress,Two MFA denials are followed by a success for the same user and IP.
+ENTRA-003-NEG,ENTRA-003,negative,False,False,pass,keep,0,status.failureReason;userPrincipalName;ipAddress,The later success comes from a different IP.
+ENTRA-003-BOUNDARY,ENTRA-003,boundary,False,False,pass,keep,0,status.failureReason;userPrincipalName;ipAddress,One MFA denial before success is below threshold.
+ENTRA-003-TUNE,ENTRA-003,false_positive,True,True,pass,tune,3,status.failureReason;userPrincipalName;ipAddress,A fictional helpdesk recovery flow still alerts and must be tuned with owner context.
+ENTRA-004-POS,ENTRA-004,positive,True,True,pass,keep,1,riskLevelDuringSignIn;riskState;conditionalAccessStatus,A high-risk sign-in succeeds without a Conditional Access failure.
+ENTRA-004-NEG,ENTRA-004,negative,False,False,pass,keep,0,riskLevelDuringSignIn;riskState;conditionalAccessStatus,A high-risk sign-in is blocked by Conditional Access.
+ENTRA-004-BOUNDARY,ENTRA-004,boundary,False,False,pass,keep,0,riskLevelDuringSignIn;riskState;conditionalAccessStatus,A successful sign-in has low risk only.
+ENTRA-005-POS,ENTRA-005,positive,True,True,pass,keep,1,category;activityDisplayName;targetResources,A fictional identity is added to Global Administrator.
+ENTRA-005-NEG,ENTRA-005,negative,False,False,pass,keep,0,category;activityDisplayName;targetResources,A non-privileged group membership change is outside scope.
+ENTRA-005-BOUNDARY,ENTRA-005,boundary,False,False,pass,keep,0,category;activityDisplayName;targetResources,A failed privileged role assignment should not alert as a successful change.
+ENTRA-005-TUNE,ENTRA-005,false_positive,True,True,pass,tune,1,category;activityDisplayName;targetResources,Approved emergency access review still alerts until the change workflow is encoded as tuning.
+ENTRA-006-POS,ENTRA-006,positive,True,True,pass,keep,1,category;activityDisplayName;modifiedProperties,A new password credential is added to a fictional application.
+ENTRA-006-NEG,ENTRA-006,negative,False,False,pass,keep,0,category;activityDisplayName;modifiedProperties,A display name update does not modify credentials.
+ENTRA-006-BOUNDARY,ENTRA-006,boundary,False,False,pass,keep,0,category;activityDisplayName;modifiedProperties,A failed credential update should not alert.
+ENTRA-006-TUNE,ENTRA-006,false_positive,True,True,pass,tune,1,category;activityDisplayName;modifiedProperties,Approved synthetic certificate rotation still alerts until the rotation pipeline is documented.

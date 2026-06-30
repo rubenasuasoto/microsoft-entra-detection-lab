@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "notice": "Synthetic lab events only. Users, apps, IP addresses and audit objects are fictional.",
+  "cases": [
+    {
+      "case_id": "ENTRA-001-POS",
+      "rule_id": "ENTRA-001",
+      "category": "positive",
+      "expected_alert": true,
+      "note": "Five failures from one source IP and one application inside five minutes.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T09:00:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:01:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:02:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:03:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:04:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-001-NEG",
+      "rule_id": "ENTRA-001",
+      "category": "negative",
+      "expected_alert": false,
+      "note": "Failures are split across unrelated source IPs.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T09:00:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.11","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:01:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.12","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:02:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.13","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-001-BOUNDARY",
+      "rule_id": "ENTRA-001",
+      "category": "boundary",
+      "expected_alert": false,
+      "note": "Four failures stay just below the threshold.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T09:00:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:01:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:02:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T09:03:00Z","userPrincipalName":"alex@example.com","ipAddress":"198.51.100.10","appDisplayName":"Microsoft 365 Portal","resourceDisplayName":"Microsoft Graph","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-002-POS",
+      "rule_id": "ENTRA-002",
+      "category": "positive",
+      "expected_alert": true,
+      "note": "One source fails against five distinct users.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T10:00:00Z","userPrincipalName":"user01@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:02:00Z","userPrincipalName":"user02@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:04:00Z","userPrincipalName":"user03@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:06:00Z","userPrincipalName":"user04@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:08:00Z","userPrincipalName":"user05@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-002-NEG",
+      "rule_id": "ENTRA-002",
+      "category": "negative",
+      "expected_alert": false,
+      "note": "Repeated failures affect only one user.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T10:00:00Z","userPrincipalName":"user01@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:02:00Z","userPrincipalName":"user01@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:04:00Z","userPrincipalName":"user01@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-002-BOUNDARY",
+      "rule_id": "ENTRA-002",
+      "category": "boundary",
+      "expected_alert": false,
+      "note": "Four distinct users remain below the threshold.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T10:00:00Z","userPrincipalName":"user01@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:02:00Z","userPrincipalName":"user02@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:04:00Z","userPrincipalName":"user03@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T10:06:00Z","userPrincipalName":"user04@example.com","ipAddress":"198.51.100.20","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"notApplied","status":{"errorCode":50126,"failureReason":"Invalid username or password"},"riskLevelDuringSignIn":"none","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"NL"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-003-POS",
+      "rule_id": "ENTRA-003",
+      "category": "positive",
+      "expected_alert": true,
+      "note": "Two MFA denials are followed by a success for the same user and IP.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T11:00:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.30","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":500121,"failureReason":"MFA denied by user"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":["unfamiliarFeatures"],"location":{"countryOrRegion":"FR"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T11:03:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.30","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":500121,"failureReason":"MFA denied by user"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":["unfamiliarFeatures"],"location":{"countryOrRegion":"FR"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T11:07:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.30","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":0,"failureReason":"None"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":["unfamiliarFeatures"],"location":{"countryOrRegion":"FR"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-003-NEG",
+      "rule_id": "ENTRA-003",
+      "category": "negative",
+      "expected_alert": false,
+      "note": "The later success comes from a different IP.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T11:00:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.30","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":500121,"failureReason":"MFA denied by user"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":[],"location":{"countryOrRegion":"FR"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T11:03:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.30","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":500121,"failureReason":"MFA denied by user"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":[],"location":{"countryOrRegion":"FR"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T11:07:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.31","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":0,"failureReason":"None"},"riskLevelDuringSignIn":"low","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-003-BOUNDARY",
+      "rule_id": "ENTRA-003",
+      "category": "boundary",
+      "expected_alert": false,
+      "note": "One MFA denial before success is below threshold.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T11:00:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.30","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":500121,"failureReason":"MFA denied by user"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":[],"location":{"countryOrRegion":"FR"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T11:07:00Z","userPrincipalName":"morgan@example.com","ipAddress":"203.0.113.30","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":0,"failureReason":"None"},"riskLevelDuringSignIn":"low","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"FR"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-003-TUNE",
+      "rule_id": "ENTRA-003",
+      "category": "false_positive",
+      "expected_alert": true,
+      "disposition": "tune",
+      "note": "A fictional helpdesk recovery flow still alerts and must be tuned with owner context.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T11:20:00Z","userPrincipalName":"taylor@example.com","ipAddress":"203.0.113.40","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":500121,"failureReason":"MFA denied by user"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T11:23:00Z","userPrincipalName":"taylor@example.com","ipAddress":"203.0.113.40","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":500121,"failureReason":"MFA denied by user"},"riskLevelDuringSignIn":"low","riskState":"atRisk","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}},
+        {"source":"signIn","createdDateTime":"2026-02-10T11:28:00Z","userPrincipalName":"taylor@example.com","ipAddress":"203.0.113.40","appDisplayName":"Office Home","resourceDisplayName":"Microsoft 365","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":0,"failureReason":"None"},"riskLevelDuringSignIn":"low","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-004-POS",
+      "rule_id": "ENTRA-004",
+      "category": "positive",
+      "expected_alert": true,
+      "note": "A high-risk sign-in succeeds without a Conditional Access failure.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T12:00:00Z","userPrincipalName":"admin01@example.com","ipAddress":"203.0.113.50","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":0,"failureReason":"None"},"riskLevelDuringSignIn":"high","riskState":"atRisk","riskEventTypes_v2":["anonymousIPAddress"],"location":{"countryOrRegion":"ZZ"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-004-NEG",
+      "rule_id": "ENTRA-004",
+      "category": "negative",
+      "expected_alert": false,
+      "note": "A high-risk sign-in is blocked by Conditional Access.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T12:00:00Z","userPrincipalName":"admin01@example.com","ipAddress":"203.0.113.50","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"failure","status":{"errorCode":53003,"failureReason":"Blocked by Conditional Access"},"riskLevelDuringSignIn":"high","riskState":"atRisk","riskEventTypes_v2":["anonymousIPAddress"],"location":{"countryOrRegion":"ZZ"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-004-BOUNDARY",
+      "rule_id": "ENTRA-004",
+      "category": "boundary",
+      "expected_alert": false,
+      "note": "A successful sign-in has low risk only.",
+      "events": [
+        {"source":"signIn","createdDateTime":"2026-02-10T12:05:00Z","userPrincipalName":"admin01@example.com","ipAddress":"203.0.113.51","appDisplayName":"Azure Portal","resourceDisplayName":"Azure Resource Manager","clientAppUsed":"Browser","isInteractive":true,"conditionalAccessStatus":"success","status":{"errorCode":0,"failureReason":"None"},"riskLevelDuringSignIn":"low","riskState":"none","riskEventTypes_v2":[],"location":{"countryOrRegion":"ES"}}
+      ]
+    },
+    {
+      "case_id": "ENTRA-005-POS",
+      "rule_id": "ENTRA-005",
+      "category": "positive",
+      "expected_alert": true,
+      "note": "A fictional identity is added to Global Administrator.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T13:00:00Z","activityDisplayName":"Add member to role","category":"RoleManagement","operationType":"Assign","result":"success","initiatedBy":{"user":{"userPrincipalName":"approver@example.com","displayName":"Access Approver"}},"targetResources":[{"displayName":"Global Administrator","type":"Role"},{"displayName":"admin01@example.com","type":"User"}],"modifiedProperties":[{"displayName":"Role.DisplayName","newValue":"Global Administrator","oldValue":""}]}
+      ]
+    },
+    {
+      "case_id": "ENTRA-005-NEG",
+      "rule_id": "ENTRA-005",
+      "category": "negative",
+      "expected_alert": false,
+      "note": "A non-privileged group membership change is outside scope.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T13:00:00Z","activityDisplayName":"Add member to group","category":"GroupManagement","operationType":"Add","result":"success","initiatedBy":{"user":{"userPrincipalName":"group.owner@example.com","displayName":"Group Owner"}},"targetResources":[{"displayName":"Project Readers","type":"Group"},{"displayName":"analyst01@example.com","type":"User"}],"modifiedProperties":[{"displayName":"Group.DisplayName","newValue":"Project Readers","oldValue":""}]}
+      ]
+    },
+    {
+      "case_id": "ENTRA-005-BOUNDARY",
+      "rule_id": "ENTRA-005",
+      "category": "boundary",
+      "expected_alert": false,
+      "note": "A failed privileged role assignment should not alert as a successful change.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T13:05:00Z","activityDisplayName":"Add member to role","category":"RoleManagement","operationType":"Assign","result":"failure","initiatedBy":{"user":{"userPrincipalName":"approver@example.com","displayName":"Access Approver"}},"targetResources":[{"displayName":"Global Administrator","type":"Role"},{"displayName":"admin02@example.com","type":"User"}],"modifiedProperties":[{"displayName":"Role.DisplayName","newValue":"Global Administrator","oldValue":""}]}
+      ]
+    },
+    {
+      "case_id": "ENTRA-005-TUNE",
+      "rule_id": "ENTRA-005",
+      "category": "false_positive",
+      "expected_alert": true,
+      "disposition": "tune",
+      "note": "Approved emergency access review still alerts until the change workflow is encoded as tuning.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T13:20:00Z","activityDisplayName":"Add member to role","category":"RoleManagement","operationType":"Assign","result":"success","initiatedBy":{"user":{"userPrincipalName":"approver@example.com","displayName":"Access Approver"}},"targetResources":[{"displayName":"Privileged Role Administrator","type":"Role"},{"displayName":"breakglass-review@example.com","type":"User"}],"modifiedProperties":[{"displayName":"Role.DisplayName","newValue":"Privileged Role Administrator","oldValue":""}]}
+      ]
+    },
+    {
+      "case_id": "ENTRA-006-POS",
+      "rule_id": "ENTRA-006",
+      "category": "positive",
+      "expected_alert": true,
+      "note": "A new password credential is added to a fictional application.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T14:00:00Z","activityDisplayName":"Add service principal credentials","category":"ApplicationManagement","operationType":"Update","result":"success","initiatedBy":{"user":{"userPrincipalName":"app.owner@example.com","displayName":"Application Owner"}},"targetResources":[{"displayName":"Payroll Export App","type":"ServicePrincipal","modifiedProperties":[{"displayName":"passwordCredentials","newValue":"credential metadata only","oldValue":""}]}],"modifiedProperties":[{"displayName":"passwordCredentials","newValue":"credential metadata only","oldValue":""}]}
+      ]
+    },
+    {
+      "case_id": "ENTRA-006-NEG",
+      "rule_id": "ENTRA-006",
+      "category": "negative",
+      "expected_alert": false,
+      "note": "A display name update does not modify credentials.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T14:00:00Z","activityDisplayName":"Update application","category":"ApplicationManagement","operationType":"Update","result":"success","initiatedBy":{"user":{"userPrincipalName":"app.owner@example.com","displayName":"Application Owner"}},"targetResources":[{"displayName":"Payroll Export App","type":"Application","modifiedProperties":[{"displayName":"displayName","newValue":"Payroll Export App v2","oldValue":"Payroll Export App"}]}],"modifiedProperties":[{"displayName":"displayName","newValue":"Payroll Export App v2","oldValue":"Payroll Export App"}]}
+      ]
+    },
+    {
+      "case_id": "ENTRA-006-BOUNDARY",
+      "rule_id": "ENTRA-006",
+      "category": "boundary",
+      "expected_alert": false,
+      "note": "A failed credential update should not alert.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T14:05:00Z","activityDisplayName":"Add service principal credentials","category":"ApplicationManagement","operationType":"Update","result":"failure","initiatedBy":{"user":{"userPrincipalName":"app.owner@example.com","displayName":"Application Owner"}},"targetResources":[{"displayName":"Payroll Export App","type":"ServicePrincipal","modifiedProperties":[{"displayName":"keyCredentials","newValue":"credential metadata only","oldValue":""}]}],"modifiedProperties":[{"displayName":"keyCredentials","newValue":"credential metadata only","oldValue":""}]}
+      ]
+    },
+    {
+      "case_id": "ENTRA-006-TUNE",
+      "rule_id": "ENTRA-006",
+      "category": "false_positive",
+      "expected_alert": true,
+      "disposition": "tune",
+      "note": "Approved synthetic certificate rotation still alerts until the rotation pipeline is documented.",
+      "events": [
+        {"source":"directoryAudit","activityDateTime":"2026-02-10T14:20:00Z","activityDisplayName":"Add service principal credentials","category":"ApplicationManagement","operationType":"Update","result":"success","initiatedBy":{"user":{"userPrincipalName":"automation.owner@example.com","displayName":"Automation Owner"}},"targetResources":[{"displayName":"Backup Automation App","type":"ServicePrincipal","modifiedProperties":[{"displayName":"keyCredentials","newValue":"certificate metadata only","oldValue":""}]}],"modifiedProperties":[{"displayName":"keyCredentials","newValue":"certificate metadata only","oldValue":""}]}
+      ]
+    }
+  ]
+}

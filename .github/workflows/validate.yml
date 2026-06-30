@@ -1,0 +1,32 @@
+name: Validate detection lab
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  validate:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+      - run: uv sync --extra dev --locked
+      - run: uv run ruff check .
+      - run: uv run pytest --cov=entralab --cov-report=term-missing
+      - run: uv run entralab all
+      - run: uv run entralab demo
+      - run: git diff --ignore-space-at-eol --exit-code -- reports/latest
+      - run: uv run detect-secrets-hook --baseline .secrets.baseline $(git ls-files)
+        shell: bash
+      - run: uv run pip-audit --skip-editable

@@ -1,0 +1,30 @@
+title: High-risk Sign-in Not Blocked
+id: ENTRA-004
+status: experimental
+description: Synthetic Entra sign-in risk review when risky access succeeds.
+logsource:
+  product: azure
+  service: entra-id
+  definition: signIn
+detection:
+  selection:
+    status.errorCode: 0
+    riskLevelDuringSignIn:
+      - medium
+      - high
+    riskState:
+      - atRisk
+      - confirmedCompromised
+  filter_blocked:
+    conditionalAccessStatus: failure
+  condition: selection and not filter_blocked
+fields:
+  - createdDateTime
+  - userPrincipalName
+  - riskLevelDuringSignIn
+  - riskState
+  - conditionalAccessStatus
+falsepositives:
+  - Risk fields unavailable in some tenants
+  - Report-only policy mode
+level: high

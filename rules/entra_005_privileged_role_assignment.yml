@@ -1,0 +1,29 @@
+title: Privileged Role Assignment
+id: ENTRA-005
+status: experimental
+description: Synthetic Entra audit review for privileged directory role assignment.
+logsource:
+  product: azure
+  service: entra-id
+  definition: directoryAudit
+detection:
+  selection:
+    category: RoleManagement
+    result: success
+    activityDisplayName|contains: Add member to role
+    targetResources.displayName:
+      - Global Administrator
+      - Privileged Role Administrator
+  condition: selection
+fields:
+  - activityDateTime
+  - activityDisplayName
+  - category
+  - operationType
+  - result
+  - initiatedBy
+  - targetResources
+falsepositives:
+  - Approved access package
+  - Emergency change window
+level: high

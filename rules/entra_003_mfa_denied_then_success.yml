@@ -1,0 +1,25 @@
+title: MFA Denied Repeatedly Followed By Success
+id: ENTRA-003
+status: experimental
+description: Synthetic Entra sign-in sequence for repeated MFA denial followed by success.
+logsource:
+  product: azure
+  service: entra-id
+  definition: signIn
+detection:
+  selection_denied:
+    status.failureReason|contains: MFA denied
+  selection_success:
+    status.errorCode: 0
+  timeframe: 15m
+  condition: selection_denied >= 2 followed_by selection_success by userPrincipalName, ipAddress
+fields:
+  - createdDateTime
+  - userPrincipalName
+  - ipAddress
+  - status.failureReason
+  - status.errorCode
+falsepositives:
+  - User mistakes
+  - Helpdesk-assisted recovery
+level: high

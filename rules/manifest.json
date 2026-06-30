@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "pack": "Microsoft Entra ID Detection Lab",
+  "author": "Ruben Asua",
+  "scope": "Synthetic Microsoft Entra sign-in and audit logs only.",
+  "detections": [
+    {
+      "key": "ENTRA-001",
+      "file": "entra_001_repeated_failed_signins_one_ip.yml",
+      "title": "Repeated Failed Sign-ins From One IP",
+      "log_source": "signIn",
+      "required_fields": ["createdDateTime", "userPrincipalName", "ipAddress", "appDisplayName", "status.errorCode"],
+      "threshold": "5 failed sign-ins in 5 minutes per IP and app",
+      "attack": ["T1110"],
+      "risk": "medium",
+      "severity_reason": "A noisy failed source can indicate password guessing, but source ownership and expected testing must be reviewed before escalation.",
+      "triage_priority": "P3",
+      "tuning": "Baseline identity test systems, VPN concentrators and known managed service traffic before excluding.",
+      "playbook": "ENTRA-001_repeated_failed_signins_one_ip.md",
+      "narrative": {
+        "what_happened": "Several failed sign-ins were observed from one source IP against the same cloud application.",
+        "why_it_matters": "Concentrated failures can be an early indicator of password guessing or a broken automation path.",
+        "what_to_check_next": "Confirm whether the IP belongs to expected infrastructure, review affected users and compare with recent support or testing activity.",
+        "decision_example": "Keep the alert when the source is not owned or when failures continue across a short window."
+      }
+    },
+    {
+      "key": "ENTRA-002",
+      "file": "entra_002_failed_signins_multiple_users.yml",
+      "title": "Failed Sign-ins Across Multiple Users",
+      "log_source": "signIn",
+      "required_fields": ["createdDateTime", "userPrincipalName", "ipAddress", "appDisplayName", "status.errorCode"],
+      "threshold": "5 distinct users with failures in 10 minutes per IP and app",
+      "attack": ["T1110.003"],
+      "risk": "medium",
+      "severity_reason": "One source touching many accounts raises password spraying concern and deserves faster review than single-user failure bursts.",
+      "triage_priority": "P2",
+      "tuning": "Document trusted gateways and scripted identity validation sources with owner and expiration.",
+      "playbook": "ENTRA-002_failed_signins_multiple_users.md",
+      "narrative": {
+        "what_happened": "One source generated failed sign-ins across several fictional users in a short window.",
+        "why_it_matters": "Many accounts from one source is a stronger signal for password spraying than repeated attempts on one user.",
+        "what_to_check_next": "Check user count, source ownership, affected applications and whether Conditional Access or risk controls intervened.",
+        "decision_example": "Escalate when the source is unfamiliar or when failures span privileged or sensitive users."
+      }
+    },
+    {
+      "key": "ENTRA-003",
+      "file": "entra_003_mfa_denied_then_success.yml",
+      "title": "MFA Denied Repeatedly Followed By Success",
+      "log_source": "signIn",
+      "required_fields": ["createdDateTime", "userPrincipalName", "ipAddress", "status.failureReason", "status.errorCode"],
+      "threshold": "2 MFA denied failures followed by success in 15 minutes for the same user and IP",
+      "attack": ["T1621", "T1078"],
+      "risk": "high",
+      "severity_reason": "Repeated MFA denial followed by success is a high-context sequence that can justify urgent account verification.",
+      "triage_priority": "P1",
+      "tuning": "Compare with known user travel, device enrollment and helpdesk-assisted recovery before creating exceptions.",
+      "playbook": "ENTRA-003_mfa_denied_then_success.md",
+      "narrative": {
+        "what_happened": "The same user denied MFA more than once and later produced a successful sign-in from the same source.",
+        "why_it_matters": "The sequence can represent user fatigue, mistaken approval or a legitimate recovery flow that still needs validation.",
+        "what_to_check_next": "Contact the user through an approved channel, inspect device and app context, and review recent MFA registration changes.",
+        "decision_example": "Treat as priority review when the success happens quickly after repeated denials."
+      }
+    },
+    {
+      "key": "ENTRA-004",
+      "file": "entra_004_high_risk_signin_not_blocked.yml",
+      "title": "High-risk Sign-in Not Blocked",
+      "log_source": "signIn",
+      "required_fields": ["createdDateTime", "userPrincipalName", "riskLevelDuringSignIn", "riskState", "conditionalAccessStatus", "status.errorCode"],
+      "threshold": "Successful medium or high risk sign-in where Conditional Access did not fail",
+      "attack": ["T1078"],
+      "risk": "high",
+      "severity_reason": "Successful risky sign-ins should be reviewed because policy, licensing and response gaps can leave access active.",
+      "triage_priority": "P1",
+      "tuning": "Risk fields are synthetic here and may be hidden or unavailable in some real tenants depending on licensing and retention.",
+      "playbook": "ENTRA-004_high_risk_signin_not_blocked.md",
+      "narrative": {
+        "what_happened": "A synthetic sign-in with elevated risk succeeded without a Conditional Access failure result.",
+        "why_it_matters": "Risk without blocking is a control review signal, not proof of compromise, but it can reveal policy gaps.",
+        "what_to_check_next": "Review Conditional Access result, risk state, user risk history, session controls and whether Identity Protection data is available.",
+        "decision_example": "Escalate if the account is sensitive or the risk event aligns with unfamiliar location, app or device context."
+      }
+    },
+    {
+      "key": "ENTRA-005",
+      "file": "entra_005_privileged_role_assignment.yml",
+      "title": "Privileged Role Assignment",
+      "log_source": "directoryAudit",
+      "required_fields": ["activityDateTime", "activityDisplayName", "category", "operationType", "result", "initiatedBy", "targetResources"],
+      "threshold": "Successful assignment to Global Administrator or Privileged Role Administrator",
+      "attack": ["T1098"],
+      "risk": "high",
+      "severity_reason": "Privileged role assignment changes identity blast radius and should be reviewed against approved change records.",
+      "triage_priority": "P1",
+      "tuning": "Tune only with change ticket, approver, role, assignee and time-bounded approval context.",
+      "playbook": "ENTRA-005_privileged_role_assignment.md",
+      "narrative": {
+        "what_happened": "A privileged directory role was assigned successfully in synthetic audit data.",
+        "why_it_matters": "Role assignment can immediately expand administrative capability and persistence options.",
+        "what_to_check_next": "Validate the initiator, target identity, role, approval path and any follow-on administrative activity.",
+        "decision_example": "Escalate when the assignment is outside an approved maintenance or access-review workflow."
+      }
+    },
+    {
+      "key": "ENTRA-006",
+      "file": "entra_006_application_credential_added.yml",
+      "title": "Application Credential Added",
+      "log_source": "directoryAudit",
+      "required_fields": ["activityDateTime", "activityDisplayName", "category", "operationType", "result", "initiatedBy", "targetResources", "modifiedProperties"],
+      "threshold": "Successful application or service principal credential update",
+      "attack": ["T1098.001"],
+      "risk": "medium",
+      "severity_reason": "New app credentials can be legitimate rotation or a persistence concern depending on owner, app scope and timing.",
+      "triage_priority": "P2",
+      "tuning": "Baseline approved credential rotation pipelines and require owner, app id, expiration and change record.",
+      "playbook": "ENTRA-006_application_credential_added.md",
+      "narrative": {
+        "what_happened": "A credential-related property changed on a synthetic application or service principal object.",
+        "why_it_matters": "Application credentials can allow non-interactive access and deserve clear ownership and expiry validation.",
+        "what_to_check_next": "Review app owner, credential type, expiration, permissions and whether the change matches an approved rotation.",
+        "decision_example": "Keep the alert when credential changes happen outside expected automation or involve sensitive app permissions."
+      }
+    }
+  ]
+}
