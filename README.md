@@ -1,8 +1,12 @@
 # Microsoft Entra Detection Lab
 
+[![Validate detection lab](https://github.com/rubenasuasoto/microsoft-entra-detection-lab/actions/workflows/validate.yml/badge.svg)](https://github.com/rubenasuasoto/microsoft-entra-detection-lab/actions/workflows/validate.yml)
+
 A safe, reproducible detection-engineering lab for Microsoft Entra ID sign-in and audit anomalies.
 
 The project uses only synthetic events. It does not connect to Microsoft Graph, does not require a tenant, does not use credentials or tokens, and does not ingest production logs.
+
+Release status: `v0.1.0 pending release`.
 
 ## What It Includes
 
@@ -15,6 +19,10 @@ The project uses only synthetic events. It does not connect to Microsoft Graph, 
 - GitHub Actions workflow for repeatable validation and GitHub Pages publishing.
 
 ## Demo
+
+Expected public demo URL:
+
+<https://rubenasuasoto.github.io/microsoft-entra-detection-lab/reports/latest/demo.html>
 
 Generate the local demo:
 
@@ -29,6 +37,15 @@ reports/latest/demo.html
 ```
 
 The demo is static HTML with inline CSS and JavaScript. It contains no backend, forms, uploads, live Graph calls or external assets.
+
+## Documentation
+
+- GitBook-ready docs: [`docs/README.md`](docs/README.md)
+- Reviewer guide: [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md)
+- Playbooks: [`docs/playbooks/`](docs/playbooks/)
+- GitBook setup: [`docs/GITBOOK_SETUP.md`](docs/GITBOOK_SETUP.md)
+
+After the GitBook space is published, set `GITBOOK_BASE_URL` in `src/entralab/demo.py` and regenerate the demo so playbook links open the public GitBook pages. Until then, the demo uses repository-relative playbook links.
 
 ## Detection Pack
 
