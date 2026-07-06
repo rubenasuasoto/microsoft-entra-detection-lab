@@ -12,7 +12,7 @@ from .paths import REPORTS_DIR, ensure_output_directories
 from .rules import load_manifest
 
 SCOPE_NOTICE = "Synthetic lab only. No real tenants, credentials, tokens, production logs or live Graph calls."
-GITBOOK_BASE_URL = ""
+GITBOOK_BASE_URL = "https://2dam-7.gitbook.io/window-entra/"
 
 
 def _slug(path: str) -> str:

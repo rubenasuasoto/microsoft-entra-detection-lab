@@ -72,7 +72,7 @@ class DemoTests(unittest.TestCase):
         ):
             with self.subTest(rule_id=rule_id):
                 self.assertIn(f"Open {rule_id} playbook", self.html)
-                self.assertIn(f"../../docs/playbooks/{rule_id}", self.html)
+                self.assertIn(f"{GITBOOK_BASE_URL}playbooks/{rule_id.lower()}", self.html)
 
     def test_demo_exposes_guided_soc_controls(self) -> None:
         for expected in (

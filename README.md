@@ -6,7 +6,7 @@ A safe, reproducible detection-engineering lab for Microsoft Entra ID sign-in an
 
 The project uses only synthetic events. It does not connect to Microsoft Graph, does not require a tenant, does not use credentials or tokens, and does not ingest production logs.
 
-Release status: `v0.1.0 pending release` until GitBook links and final public checks are complete.
+Release target: `v0.1.0`.
 
 ## What It Includes
 
@@ -40,12 +40,13 @@ The demo is static HTML with inline CSS and JavaScript. It contains no backend, 
 
 ## Documentation
 
+- Public GitBook: <https://2dam-7.gitbook.io/window-entra/>
 - GitBook-ready docs: [`docs/README.md`](docs/README.md)
 - Reviewer guide: [`docs/REVIEWER_GUIDE.md`](docs/REVIEWER_GUIDE.md)
 - Playbooks: [`docs/playbooks/`](docs/playbooks/)
 - GitBook setup: [`docs/GITBOOK_SETUP.md`](docs/GITBOOK_SETUP.md)
 
-The public demo currently uses repository-relative playbook links served by GitHub Pages. After the GitBook space is published, set `GITBOOK_BASE_URL` in `src/entralab/demo.py` and regenerate the demo so playbook links open the public GitBook pages.
+The public demo links each playbook to GitBook. Repository-relative Markdown playbooks remain available through GitHub Pages as a fallback.
 
 ## Detection Pack
 
