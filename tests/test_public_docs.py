@@ -11,6 +11,7 @@ class PublicDocsTests(unittest.TestCase):
             readme,
         )
         self.assertIn("v0.1.0 pending release", readme)
+        self.assertIn("Public demo:", readme)
         self.assertIn("actions/workflows/validate.yml/badge.svg", readme)
 
     def test_release_checklist_blocks_tag_until_public_checks_pass(self) -> None:
@@ -18,6 +19,10 @@ class PublicDocsTests(unittest.TestCase):
         self.assertIn("Publish demo site", checklist)
         self.assertIn("No `v0.1.0` tag exists before the public checks", checklist)
         self.assertIn("GitBook documentation returns `200`", checklist)
+        self.assertIn(
+            "Repository-relative playbooks served by GitHub Pages return `200`",
+            checklist,
+        )
 
 
 if __name__ == "__main__":
